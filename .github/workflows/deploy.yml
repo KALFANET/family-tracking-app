@@ -3,28 +3,40 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - main  # הענף שבו אתה רוצה שההעלאה תתבצע
+      - main  # או הסניף שבו אתה משתמש
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # גרסת Node.js שברצונך להשתמש בה
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Deploy to Firebase Hosting
-      uses: FirebaseExtended/action-hosting-deploy@v0
-      with:
-        repoToken: ${{ secrets.GITHUB_TOKEN }}
-        firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        channelId: live
-        projectId: your-firebase-project-id  # שנה את זה לשם הפרויקט שלך ב-Firebase
+      - name: Set environment variables
+        run: |
+          echo "REACT_APP_FIREBASE_API_KEY=AIzaSyACt64c2UrswCwTjpGiOTuJEv4Rn6SRqsc" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_AUTH_DOMAIN=famliy-group.firebaseapp.com" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_DATABASE_URL=https://famliy-group-default-rtdb.firebaseio.com" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_PROJECT_ID=famliy-group" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_STORAGE_BUCKET=famliy-group.firebasestorage.app" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_MESSAGING_SENDER_ID=959669043928" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_APP_ID=1:959669043928:web:b6a18ce5e70f106ae50dad" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_MEASUREMENT_ID=G-KN79RL2WBS" >> $GITHUB_ENV
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: live
