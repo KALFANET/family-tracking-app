@@ -1,40 +1,46 @@
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-function Login() {
+function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const auth = getAuth();
 
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        alert('התחברת בהצלחה!');
-        navigate('/');
-      })
-      .catch((error) => {
-        alert(`שגיאה בהתחברות: ${error.message}`);
-      });
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      onLoginSuccess(user.uid); // קריאה לפונקציה לעדכון ה-UID
+      navigate('/admin'); // הפניה לדף הניהול אם ההתחברות הצליחה
+    } catch (error) {
+      console.error('Error logging in:', error);
+      alert('Login failed. Please check your email and password.');
+    }
   };
 
   return (
-    <div className="login">
-      <h2>התחברות</h2>
-      <input
-        type="email"
-        placeholder="מייל"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="סיסמא"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>התחבר</button>
+    <div className="login-container">
+      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
     </div>
   );
 }
