@@ -1,13 +1,115 @@
-body {
+/* עיצוב כללי */
+body, html, #root {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  height: 100%;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* עיצוב כותרות */
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+/* עיצוב רכיב המפה */
+.map {
+  height: 70vh;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* עיצוב תפריט */
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.menu-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.menu-button:hover {
+  background-color: #bdc3c7;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* כפתור התראה */
+.alert {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.alert:hover {
+  background-color: #c0392b;
+}
+
+/* כפתור יוקרתי */
+.menu-button-primary {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.menu-button-primary:hover {
+  background-color: #27ae60;
+}
+
+/* עיצוב טופס הוספת משתמש */
+input {
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  border: 1px solid #bdc3c7;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #2ecc71;
+}
+
+/* רשימת משתמשים */
+.manage-users ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.manage-users li {
+  padding: 10px;
+  background-color: #ecf0f1;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
